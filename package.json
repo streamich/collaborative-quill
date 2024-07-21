@@ -20,7 +20,7 @@
     "prettier:check": "prettier --ignore-path .gitignore --list-different 'src/**/*.{ts,tsx,js,jsx}'",
     "lint": "echo 'not installed'",
     "clean": "npx rimraf@5 dist lib es6 es2019 es2020 esm typedocs storybook-static",
-    "build": "tsc --project tsconfig.build.json",
+    "build": "tsc --project tsconfig.build.json --outDir lib",
     "jest": "jest",
     "test": "yarn jest --maxWorkers 7",
     "test:all": "yarn lint && yarn test",
