@@ -8,10 +8,21 @@ export default {
 };
 
 const model = ModelWithExt.create(ext.quill.new('abc'));
+const api = model.s.toExt();
 
+const Demo: React.FC = () => {
+  React.useSyncExternalStore(model.api.subscribe, () => model.tick);
 
-console.log(model + '');
+  return (
+    <div>
+      <CollaborativeQuill api={api} />
+      <pre style={{fontSize: '10px'}}>
+        <code>{model.toString()}</code>
+      </pre>
+    </div>
+  );
+};
 
 export const Default = {
-  render: () => <CollaborativeQuill />,
+  render: Demo,
 };

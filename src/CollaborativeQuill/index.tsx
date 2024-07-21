@@ -1,104 +1,53 @@
 import * as React from 'react';
-import Delta from 'quill-delta';
-import Quill from 'quill';
-import {QuillDeltaApi} from 'json-joy/lib/json-crdt-extensions/quill-delta/QuillDeltaApi';
+import Quill, {type QuillOptions} from 'quill';
+import {QuillBinding} from '../QuillBinding';
 import {loadCss} from './loadCss';
-import type {QuillDeltaOp} from 'json-joy/lib/json-crdt-extensions/quill-delta/types';
+import {QuillDeltaApi} from 'json-joy/lib/json-crdt-extensions/quill-delta/QuillDeltaApi';
+import {opts} from './constants';
+import type {OnEditorChange, OnSelectionChange, OnTextChange} from '../types';
 
-loadCss('https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css');
-
-const toolbarOptions = [
-  ['bold', 'italic', 'underline', 'strike', 'link'], // toggled buttons
-  ['blockquote', 'code-block'],
-
-  [{header: 1}, {header: 2}], // custom button values
-  [{list: 'ordered'}, {list: 'bullet'}],
-  [{script: 'sub'}, {script: 'super'}], // superscript/subscript
-  [{indent: '-1'}, {indent: '+1'}], // outdent/indent
-  [{direction: 'rtl'}], // text direction
-
-  ['image'],
-
-  [{header: [1, 2, 3, 4, 5, 6, false]}],
-
-  [{color: []}, {background: []}], // dropdown with defaults from theme
-  [{font: []}],
-  [{align: []}],
-
-  ['clean'], // remove formatting button
-];
-
-export interface CollaborativeQuillProps {
-  api?: QuillDeltaApi;
-  content?: QuillDeltaOp[];
-  readOnly?: boolean;
-  onChange?: (ops: QuillDeltaOp[]) => void;
+export interface CollaborativeQuillProps extends React.HTMLAttributes<HTMLDivElement> {
+  api: QuillDeltaApi;
+  editor?: Quill;
+  readonly?: boolean;
+  options?: QuillOptions;
+  themeCss?: string;
+  onEditor?: (quill: Quill) => void;
+  onTextChange?: OnTextChange;
+  onSelectionChange?: OnSelectionChange;
+  onEditorChange?: OnEditorChange;
 }
 
-export const CollaborativeQuill: React.FC<CollaborativeQuillProps> = ({api, content, readOnly, onChange}) => {
+export const CollaborativeQuill: React.FC<CollaborativeQuillProps> = ({api, options = {...opts}, readonly, themeCss, onEditor, onTextChange, onSelectionChange, onEditorChange, ...rest}) => {
   const ref = React.useRef<HTMLDivElement>(null);
-  const editor = React.useRef<Quill>();
+
+  options.readOnly = readonly
+
   React.useEffect(() => {
     const div = ref.current;
     if (!div) return;
-    const quill = new Quill(div, {
-      theme: 'snow',
-      modules: {
-        toolbar: readOnly ? [] : toolbarOptions,
-      },
-    });
-    if (api) {
-      const delta = new Delta(api.view() as any);
-      quill.setContents(delta as any, 'silent');
-    }
-    editor.current = quill;
-    if (readOnly) quill.enable(false);
-    else {
-      quill.on('editor-change', (name: any, delta: any) => {
-        if (name === 'text-change') {
-          const ops = delta.ops as QuillDeltaOp[];
+    if (!themeCss) themeCss = `https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.${options.theme || 'snow'}.css`;
+    loadCss(themeCss, themeCss);
+    const editor = new Quill(div, options);
+    const unbind = QuillBinding.bind(api, editor);
+    onEditor?.(editor);
+    const handleChange: OnEditorChange = (eventName: 'text-change' | 'selection-change', ...args: unknown[]) => {
+      switch (eventName) {
+        case 'text-change':
+          (onTextChange as any)?.(...args);
+          break;
+        case 'selection-change':
+          (onSelectionChange as any)?.(...args);
+          break;
+      }
+      (onEditorChange as any)?.(eventName, ...args);
+    };
+    editor.on('editor-change', handleChange);
+    return () => {
+      unbind();
+      editor.off('editor-change', handleChange);
+    };
+  }, [api, options.theme, options.readOnly, options.debug, options.placeholder]);
 
-          /**
-           * When inside an annotated text (say bold test), a character is inserted,
-           * just before the last annotated character, and the inserted character
-           * is the same as the last character, then Quill does not insert it in
-           * the right place: it inserts it just after the last annotated character.
-           * This is a workaround for this bug.
-           */
-          if (ops.length === 2) {
-            const retain = (ops[0] as any).retain;
-            const insert = (ops[1] as any).insert;
-            const attributes = (ops[1] as any).attributes;
-            if (
-              typeof retain === 'number' &&
-              typeof insert === 'string' &&
-              attributes &&
-              insert.length === 1 &&
-              insert !== '\n'
-            ) {
-              const selection = quill.getSelection();
-              if (selection && selection.length === 0) {
-                if (selection.index === retain) {
-                  delta.ops[0].retain = retain - 1;
-                }
-              }
-            }
-          }
-
-          if (api) api.apply(delta.ops);
-          if (onChange) {
-            // tslint:disable-next-line:no-console
-            console.log(quill.getSelection(), delta.ops[0], delta.ops[1]);
-            onChange(delta.ops as QuillDeltaOp[]);
-          }
-        }
-      });
-    }
-  }, [ref]);
-
-  if (content) {
-    editor.current?.setContents(new Delta(content as any) as any, 'api');
-  }
-
-  return <div ref={ref} />;
+  return <div {...rest} ref={ref} />;
 };
