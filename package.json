@@ -45,11 +45,10 @@
     "json",
     "crdt"
   ],
-  "dependencies": {},
   "peerDependencies": {
+    "json-joy": "*",
     "quill": "*",
     "quill-delta": "*",
-    "json-joy": "*",
     "react": "*",
     "tslib": "2"
   },
@@ -127,5 +126,6 @@
         "path": "git-cz"
       }
     }
-  }
+  },
+  "packageManager": "yarn@4.3.1"
 }
