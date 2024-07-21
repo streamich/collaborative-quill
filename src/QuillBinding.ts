@@ -58,7 +58,8 @@ export class QuillBinding {
 
   protected syncFromModel(): void {
     const modelDelta = new Delta(this.api.view());
-    const diff = modelDelta.diff(this.quill.getContents());
+    const editorDelta = this.quill.getContents();
+    const diff = editorDelta.diff(modelDelta);
     this.quill.updateContents(diff, 'silent');
   }
 

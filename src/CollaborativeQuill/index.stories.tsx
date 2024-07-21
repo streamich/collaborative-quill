@@ -16,6 +16,18 @@ const Demo: React.FC = () => {
   return (
     <div>
       <CollaborativeQuill api={api} />
+      <br />
+      <div>
+        <button
+          onClick={() => {
+            setTimeout(() => {
+              api.apply([{insert: '1. '}]);
+            }, 2000);
+          }}
+        >
+          Prepend "1. " to model after 2s
+        </button>
+      </div>
       <pre style={{fontSize: '10px'}}>
         <code>{model.toString()}</code>
       </pre>
