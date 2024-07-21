@@ -18,7 +18,7 @@ const Demo: React.FC = () => {
 
   return (
     <div>
-      <CollaborativeQuill api={api} onEditor={editor => editorRef.current = editor} />
+      <CollaborativeQuill api={api} onEditor={(editor) => (editorRef.current = editor)} />
       <br />
       <div>
         <button
@@ -48,10 +48,7 @@ const Demo: React.FC = () => {
           onClick={() => {
             setTimeout(() => {
               const delta = new Delta(api.view());
-              api.apply([
-                {retain: delta.length() || 0},
-                {insert: '?'},
-              ]);
+              api.apply([{retain: delta.length() || 0}, {insert: '?'}]);
             }, 2000);
           }}
         >

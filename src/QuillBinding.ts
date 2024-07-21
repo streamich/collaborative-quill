@@ -11,7 +11,7 @@ export class QuillBinding {
     binding.bind();
     return binding.unbind;
   };
-  
+
   protected readonly race = invokeFirstOnly();
 
   constructor(
