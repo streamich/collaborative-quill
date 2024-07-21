@@ -50,8 +50,15 @@
   "dependencies": {},
   "peerDependencies": {
     "quill": "*",
+    "quill-delta": "*",
     "json-joy": "*",
+    "react": "*",
     "tslib": "2"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@babel/preset-env": "^7.23.5",
@@ -77,6 +84,7 @@
     "json-joy": "^16.13.2",
     "prettier": "^3.3.3",
     "quill": "^2.0.2",
+    "quill-delta": "^5.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "storybook": "^7.6.2",
@@ -132,6 +140,5 @@
         "path": "git-cz"
       }
     }
-  },
-  "packageManager": "yarn@4.0.2"
+  }
 }
