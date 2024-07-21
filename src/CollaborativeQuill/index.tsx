@@ -18,10 +18,20 @@ export interface CollaborativeQuillProps extends React.HTMLAttributes<HTMLDivEle
   onEditorChange?: OnEditorChange;
 }
 
-export const CollaborativeQuill: React.FC<CollaborativeQuillProps> = ({api, options = {...opts}, readonly, themeCss, onEditor, onTextChange, onSelectionChange, onEditorChange, ...rest}) => {
+export const CollaborativeQuill: React.FC<CollaborativeQuillProps> = ({
+  api,
+  options = {...opts},
+  readonly,
+  themeCss,
+  onEditor,
+  onTextChange,
+  onSelectionChange,
+  onEditorChange,
+  ...rest
+}) => {
   const ref = React.useRef<HTMLDivElement>(null);
 
-  options.readOnly = readonly
+  options.readOnly = readonly;
 
   React.useEffect(() => {
     const div = ref.current;

@@ -49,7 +49,7 @@ export class QuillBinding {
 
   public readonly bind = () => {
     const delta = new Delta(this.api.view());
-    const quill = this.quill
+    const quill = this.quill;
     quill.setContents(delta, 'silent');
     quill.on('text-change', this.onTextChange);
   };
