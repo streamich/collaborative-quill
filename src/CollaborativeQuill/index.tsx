@@ -7,7 +7,7 @@ import {opts} from './constants';
 import type {OnEditorChange, OnSelectionChange, OnTextChange} from '../types';
 
 export interface CollaborativeQuillProps extends React.HTMLAttributes<HTMLDivElement> {
-  api: QuillDeltaApi;
+  api: () => QuillDeltaApi;
   editor?: Quill;
   readonly?: boolean;
   options?: QuillOptions;
@@ -57,7 +57,7 @@ export const CollaborativeQuill: React.FC<CollaborativeQuillProps> = ({
       unbind();
       editor.off('editor-change', handleChange);
     };
-  }, [api, options.theme, options.readOnly, options.debug, options.placeholder]);
+  }, [options.theme, options.readOnly, options.debug, options.placeholder]);
 
   return <div {...rest} ref={ref} />;
 };
