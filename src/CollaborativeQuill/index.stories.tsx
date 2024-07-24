@@ -10,7 +10,7 @@ export default {
 };
 
 const model = ModelWithExt.create(ext.quill.new('abc'));
-const api = model.s.toExt();
+const api = () => model.s.toExt();
 
 const Demo: React.FC = () => {
   React.useSyncExternalStore(model.api.subscribe, () => model.tick);
@@ -36,7 +36,7 @@ const Demo: React.FC = () => {
         <button
           onClick={() => {
             setTimeout(() => {
-              api.apply([{insert: '1. '}]);
+              api().apply([{insert: '1. '}]);
             }, 2000);
           }}
         >
@@ -47,12 +47,24 @@ const Demo: React.FC = () => {
         <button
           onClick={() => {
             setTimeout(() => {
-              const delta = new Delta(api.view());
-              api.apply([{retain: delta.length() || 0}, {insert: '?'}]);
+              const delta = new Delta(api().view());
+              api().apply([{retain: delta.length() || 0}, {insert: '?'}]);
             }, 2000);
           }}
         >
           Append "?" to model after 2s
+        </button>
+      </div>
+      <div>
+        <button
+          onClick={() => {
+            setTimeout(() => {
+              const model2 = ModelWithExt.create(ext.quill.new('abrakadabra'));
+              model.reset(model2);
+            }, 2000);
+          }}
+        >
+          Reset to "abrakadabra" after 2s
         </button>
       </div>
       <pre style={{fontSize: '10px'}}>
