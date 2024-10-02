@@ -2093,7 +2093,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jsonjoy.com/base64@npm:^1.1.1":
+"@jsonjoy.com/base64@npm:^1.1.1, @jsonjoy.com/base64@npm:^1.1.2":
   version: 1.1.2
   resolution: "@jsonjoy.com/base64@npm:1.1.2"
   peerDependencies:
@@ -2102,9 +2102,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jsonjoy.com/json-pack@npm:^1.0.2":
-  version: 1.0.4
-  resolution: "@jsonjoy.com/json-pack@npm:1.0.4"
+"@jsonjoy.com/json-pack@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@jsonjoy.com/json-pack@npm:1.1.0"
   dependencies:
     "@jsonjoy.com/base64": "npm:^1.1.1"
     "@jsonjoy.com/util": "npm:^1.1.2"
@@ -2112,16 +2112,16 @@ __metadata:
     thingies: "npm:^1.20.0"
   peerDependencies:
     tslib: 2
-  checksum: 10c0/c06e57c33d3c18ab31af163e04f77cb759f68386c41375d1e1bd6c28beb1a3cc82217cc3b26f4c94b7385ed28a61e59b01498cf4cec562fd9e464b17eab0cf16
+  checksum: 10c0/cdf5cb567a7f2e703d4966a3e3a5f7f7b54ee40a2102aa0ede5c79bcf2060c8465d82f39de8583db4cf1d8415bec8e57dfb1156ef663567b846cdea45813d9d1
   languageName: node
   linkType: hard
 
-"@jsonjoy.com/util@npm:^1.1.0, @jsonjoy.com/util@npm:^1.1.2":
-  version: 1.2.0
-  resolution: "@jsonjoy.com/util@npm:1.2.0"
+"@jsonjoy.com/util@npm:^1.1.2, @jsonjoy.com/util@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@jsonjoy.com/util@npm:1.3.0"
   peerDependencies:
     tslib: 2
-  checksum: 10c0/979b85076871ed1ce6961dfe7be725c8c413f50d09755e6e88184ba9b3682b59da20672b979eae74d3701fcfb094d5bba781dc7f53ffd45747f65026e699685e
+  checksum: 10c0/892bbe2073bb20bf392dd4dfed77881c6f7ae6a0cc5802e537fe3cbeeadde7738de5369f2d4529156efc5e98d9d43b15c85906ddb79140e322f1b26eaaf854df
   languageName: node
   linkType: hard
 
@@ -5692,6 +5692,9 @@ __metadata:
     "@babel/preset-env": "npm:^7.23.5"
     "@babel/preset-react": "npm:^7.23.3"
     "@babel/preset-typescript": "npm:^7.23.3"
+    "@jsonjoy.com/base64": "npm:^1.1.2"
+    "@jsonjoy.com/json-pack": "npm:^1.1.0"
+    "@jsonjoy.com/util": "npm:^1.3.0"
     "@storybook/addon-essentials": "npm:^7.6.2"
     "@storybook/addon-interactions": "npm:^7.6.2"
     "@storybook/addon-links": "npm:^7.6.2"
@@ -5704,7 +5707,7 @@ __metadata:
     "@types/react": "npm:^18.3.3"
     config-galore: "npm:^1.0.0"
     jest: "npm:^29.7.0"
-    json-joy: "npm:^16.13.2"
+    json-joy: "npm:^16.27.0"
     prettier: "npm:^3.3.3"
     quill: "npm:^2.0.2"
     quill-delta: "npm:^5.1.0"
@@ -5715,6 +5718,9 @@ __metadata:
     tslib: "npm:^2.6.3"
     typescript: "npm:^5.5.3"
   peerDependencies:
+    "@jsonjoy.com/base64": "*"
+    "@jsonjoy.com/json-pack": "*"
+    "@jsonjoy.com/util": "*"
     json-joy: "*"
     quill: "*"
     quill-delta: "*"
@@ -8866,19 +8872,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-joy@npm:^16.13.2":
-  version: 16.13.2
-  resolution: "json-joy@npm:16.13.2"
+"json-joy@npm:^16.27.0":
+  version: 16.27.0
+  resolution: "json-joy@npm:16.27.0"
   dependencies:
-    "@jsonjoy.com/base64": "npm:^1.1.1"
-    "@jsonjoy.com/json-pack": "npm:^1.0.2"
-    "@jsonjoy.com/util": "npm:^1.1.0"
     arg: "npm:^5.0.2"
     hyperdyperid: "npm:^1.2.0"
-    sonic-forest: "npm:^1.0.2"
-    thingies: "npm:^2.0.0"
-    tree-dump: "npm:^1.0.1"
+    sonic-forest: "npm:^1.0.3"
+    thingies: "npm:^2.1.1"
+    tree-dump: "npm:^1.0.2"
   peerDependencies:
+    "@jsonjoy.com/base64": ^1.1.2
+    "@jsonjoy.com/json-pack": ^1.0.4
+    "@jsonjoy.com/util": ^1.3.0
     rxjs: 7
     tslib: 2
   peerDependenciesMeta:
@@ -8893,7 +8899,7 @@ __metadata:
     json-pointer: bin/json-pointer.js
     json-pointer-test: bin/json-pointer-test.js
     json-unpack: bin/json-unpack.js
-  checksum: 10c0/60300120566a9fb2f6de86df057d60edaf066bc1bdbba552c137dfde0a7705ae0725f4c25558eaa895c44f9892454921169580c641bddaa4c03648c3cc403dc4
+  checksum: 10c0/3649889a9b876da9ab71d7028ca1078a0ede4d66d108858750492cf0417f7f0ba76f462addc918b19f7220340779f136994457e6a5893d8c6d3f98f5c1cc9d0e
   languageName: node
   linkType: hard
 
@@ -11289,7 +11295,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sonic-forest@npm:^1.0.2":
+"sonic-forest@npm:^1.0.3":
   version: 1.0.3
   resolution: "sonic-forest@npm:1.0.3"
   dependencies:
@@ -11770,12 +11776,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"thingies@npm:^2.0.0":
-  version: 2.1.1
-  resolution: "thingies@npm:2.1.1"
+"thingies@npm:^2.1.1":
+  version: 2.4.0
+  resolution: "thingies@npm:2.4.0"
   peerDependencies:
     tslib: ^2
-  checksum: 10c0/573a84a11248619b6f53d5226b90b3489b01cfc7f5fa6d37a79e91c3678e247ba981cf21760879ab8c5af58b0a225fa0b773387034c38e6e12061bb1ca1e33a6
+  checksum: 10c0/e92e347cd8ab4df2801270df679b5447b8a2412e6cde3f80c493bad98f9d26e222fa29fa85c344c8fe146b70738b055351050d57b5741d9052c39c269dd1e2f4
   languageName: node
   linkType: hard
 
@@ -11840,7 +11846,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tree-dump@npm:^1.0.0, tree-dump@npm:^1.0.1":
+"tree-dump@npm:^1.0.0, tree-dump@npm:^1.0.2":
   version: 1.0.2
   resolution: "tree-dump@npm:1.0.2"
   peerDependencies:
