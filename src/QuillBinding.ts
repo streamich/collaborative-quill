@@ -6,7 +6,7 @@ import type {QuillDeltaOp} from 'json-joy/lib/json-crdt-extensions/quill-delta/t
 import type {OnTextChange} from './types';
 
 export class QuillBinding {
-  public static bind = (api: () => QuillDeltaApi, quill: Quill) => {
+  public static bind = (api: () => QuillDeltaApi | undefined, quill: Quill) => {
     const binding = new QuillBinding(api, quill);
     binding.bind();
     return binding.unbind;
@@ -15,7 +15,7 @@ export class QuillBinding {
   protected readonly race = invokeFirstOnly();
 
   constructor(
-    public readonly api: () => QuillDeltaApi,
+    public readonly api: () => QuillDeltaApi | undefined,
     public readonly quill: Quill,
   ) {}
 
@@ -50,14 +50,16 @@ export class QuillBinding {
           }
         }
       }
-      this.api().apply(ops);
+      this.api()?.apply(ops);
     });
   };
 
   // ----------------------------------------------------- Model-to-Editor sync
 
   protected syncFromModel(): void {
-    const modelDelta = new Delta(this.api().view());
+    const api = this.api();
+    if (!api) return;
+    const modelDelta = new Delta(api.view());
     const editorDelta = this.quill.getContents();
     const diff = editorDelta.diff(modelDelta);
     this.quill.updateContents(diff, 'silent');
@@ -75,11 +77,12 @@ export class QuillBinding {
 
   public readonly bind = () => {
     const api = this.api();
-    const delta = new Delta(this.api().view());
+    if (!api) return;
+    const delta = new Delta(api.view());
     const quill = this.quill;
     quill.setContents(delta, 'silent');
     quill.on('text-change', this.onTextChange);
-    this._s = this.api().api.onChange.listen(this.onModelChange);
+    this._s = api.api.onChange.listen(this.onModelChange);
   };
 
   public readonly unbind = () => {

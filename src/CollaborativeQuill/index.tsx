@@ -7,7 +7,7 @@ import {opts} from './constants';
 import type {OnEditorChange, OnSelectionChange, OnTextChange} from '../types';
 
 export interface CollaborativeQuillProps extends React.HTMLAttributes<HTMLDivElement> {
-  api: () => QuillDeltaApi;
+  api: () => QuillDeltaApi | undefined;
   editor?: Quill;
   readonly?: boolean;
   options?: QuillOptions;
