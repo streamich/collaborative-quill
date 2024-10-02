@@ -6,7 +6,7 @@ import type {QuillDeltaOp} from 'json-joy/lib/json-crdt-extensions/quill-delta/t
 import type {OnTextChange} from './types';
 
 export class QuillBinding {
-  public static bind = (api: () => (QuillDeltaApi | undefined), quill: Quill) => {
+  public static bind = (api: () => QuillDeltaApi | undefined, quill: Quill) => {
     const binding = new QuillBinding(api, quill);
     binding.bind();
     return binding.unbind;
@@ -15,7 +15,7 @@ export class QuillBinding {
   protected readonly race = invokeFirstOnly();
 
   constructor(
-    public readonly api: () => (QuillDeltaApi | undefined),
+    public readonly api: () => QuillDeltaApi | undefined,
     public readonly quill: Quill,
   ) {}
 
