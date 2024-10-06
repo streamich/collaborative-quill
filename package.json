@@ -79,7 +79,7 @@
     "@types/react": "^18.3.3",
     "config-galore": "^1.0.0",
     "jest": "^29.7.0",
-    "json-joy": "^16.27.0",
+    "json-joy": "^17.0.0",
     "prettier": "^3.3.3",
     "quill": "^2.0.2",
     "quill-delta": "^5.1.0",
